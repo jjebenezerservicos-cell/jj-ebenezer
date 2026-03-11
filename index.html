@@ -120,13 +120,44 @@
 
             <div class="footer-form">
                 <h3>Envie uma Mensagem</h3>
-                <form action="https://formspree.io/f/xpqydoyg" method="POST">
-                    <input type="hidden" name="_next" value="http://jjebenezerservicos.vercel.app">
-                    <input type="text" name="nome" placeholder="Seu Nome" required>
-                    <input type="email" name="email" placeholder="Seu E-mail" required>
-                    <textarea name="mensagem" placeholder="Descreva o serviço que você precisa..." rows="4"></textarea>
-                    <button type="submit">Enviar Agora</button>
-                </form>
+                <form id="meu-formulario" action="https://formspree.io/f/xpqydoyg" method="POST">
+  
+  <input type="email" name="email" placeholder="http://jjebenezerservicos.vercel.app>
+  <textarea name="message" placeholder="Sua pergunta para a JJ Ebenezer" required></textarea>
+  
+  <button type="submit" id="botao-enviar">Enviar</button>
+  
+  <p id="status-envio"></p> </form>
+
+<script>
+  var form = document.getElementById("meu-formulario");
+  
+  async function handleSubmit(event) {
+    event.preventDefault(); // Esta linha trava a página do Formspree
+    var status = document.getElementById("status-envio");
+    var data = new FormData(event.target);
+    
+    fetch(event.target.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        status.innerHTML = "Mensagem enviada com sucesso!";
+        status.style.color = "green"; 
+        form.reset(); 
+      } else {
+        status.innerHTML = "Erro ao enviar.";
+        status.style.color = "red";
+      }
+    }).catch(error => {
+      status.innerHTML = "Erro de conexão.";
+      status.style.color = "red";
+    });
+  }
+  form.addEventListener("submit", handleSubmit)
+</script>
+
             </div>
         </div>
     </footer>
